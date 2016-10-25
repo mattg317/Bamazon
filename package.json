@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/mattg317/Bamazon#readme",
   "dependencies": {
+    "inquirer": "^1.2.2",
     "mysql": "^2.11.1"
   }
 }
