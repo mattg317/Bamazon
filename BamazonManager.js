@@ -18,15 +18,15 @@ connection.connect(function(err){
 
 
 
-// connection.query("INSERT INTO Product SET ?",{
-// 	ProductName: 'Pillows',
-// 	DepartmentName: 'Home',
-// 	Price: 50.00,
-// 	StockQuantity: 14
-// }, function(err, res){});
+connection.query("INSERT INTO Product SET ?",{
+	ProductName: 'Pillows',
+	DepartmentName: 'Home',
+	Price: 50.00,
+	StockQuantity: 14
+}, function(err, res){});
 
-//ProductName, DepartmentName, Price, StockQuantity
 
+//question to ask for what to do with the data base
 var questions = [{
 	type: 'list',
 	name: 'theme',
@@ -37,26 +37,46 @@ var questions = [{
 		'Add to Inventory',
 		'Add New Product'
 	]
-},{
+}];
+
+//questoins for adding to inventory, take id number and how much to addd
+var toDo=[{
 	type:'input',
 	name: 'toAdd',
-	message: 'What would you like to add more of?',
-	when: function(answers){
-		return "Add to Inventory"
-	}},{
-		type: 'input',
-		name: 'amount',
-		message: "How much would you like to add?",
-		when: function(answers){
-			return "Add to Inventory"
-		}
-}]
+	message: 'What is the ID number to add? ',
+},
+{
+	type: 'input',
+	name: 'amount',
+	message: "How much would you like to add?",
+
+}];
+
+
+//questions for adding a product to the database, take all the paramters.
+var addProduct=[{
+	type: 'input',
+	name: 'newProduct',
+	message: 'What product would you like to add?'
+},{
+	type: 'input',
+	name: 'amount',
+	message: "How much are you adding?"
+},{
+	type: 'input',
+	name: 'cost',
+	message: 'How much does each item cost?',
+},{
+	type:'input',
+	name: 'dept',
+	message: "What department is it being added to? "
+}];
 
 inquirer.prompt(questions).then(function(answers){
 	console.log(answers.theme);
-	console.log(answers.toAdd);
-	console.log(answers.amount);
-	var amount = parseInt(answers.amount);
+	console.log(answers.newProduct);
+	// console.log(answers.amount);
+	
 	if(answers.theme == 'View Products for Sale'){
 
 		connection.query("SELECT * FROM Product", function(err, res){
@@ -85,18 +105,33 @@ inquirer.prompt(questions).then(function(answers){
 		})
 	}
 	else if(answers.theme=="Add to Inventory"){
+		inquirer.prompt(toDo).then(function(answers){
+			var amount = parseFloat(answers.amount);
+			connection.query("SELECT * FROM Product WHERE ItemID= ?", [answers.toAdd], function(err,res){
+				if (err) throw err;
 
-		connection.query("SELECT * FROM Product WHERE ProductName= ?", [answers.toAdd], function(err,res){
-			if (err) throw err;
+					connection.query("UPDATE Product SET ? WHERE ?", [{
+						StockQuantity: res[0].StockQuantity + amount,
+					},{
+						ItemID: answers.toAdd
+					}], function(err, res){});
+			})
+		});
+	}
+	else if(answers.theme == "Add New Product"){
+		inquirer.prompt(addProduct).then(function(answers){
+			var amount = parseFloat(answers.amount);
+			var cost = parseFloat(answers.cost);
+			connection.query("INSERT INTO Product SET ?",{
+				ProductName: answers.newProduct,
+				DepartmentName: answers.dept,
+				Price: cost,
+				StockQuantity: amount
+			}, function(err, res){});
 
-				connection.query("UPDATE Product SET ? WHERE ?", [{
-					StockQuantity: res[0].StockQuantity + amount,
-				},{
-					ProductName: answers.toAdd
-				}], function(err, res){});
-})
 
 
+		})
 
 	}
 
