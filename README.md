@@ -1,1 +1,3 @@
 # Bamazon
+
+(/images/BamazonCustomer.png)
