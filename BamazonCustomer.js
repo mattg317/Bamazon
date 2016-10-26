@@ -53,7 +53,7 @@ connection.query('SELECT * FROM Product WHERE ItemID = '+answers.id, function(er
 		}], function(err, res){});
 	}
 	console.log('Your total is: $'+res[0].Price*answers.units);
-})
+}
 
 
 })
