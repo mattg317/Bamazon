@@ -11,19 +11,19 @@ var connection = mysql.createConnection({
 	database: 'x0b2jmtssyuutb5d'
 });
 
-connection.connect(function(err){
-	if(err) throw err;
-	console.log('connection has id ' + connection.threadId);
-})
+// connection.connect(function(err){
+// 	if(err) throw err;
+// 	console.log('connection has id ' + connection.threadId);
+// })
 
 
 
-connection.query("INSERT INTO Product SET ?",{
-	ProductName: 'Pillows',
-	DepartmentName: 'Home',
-	Price: 50.00,
-	StockQuantity: 14
-}, function(err, res){});
+// connection.query("INSERT INTO Product SET ?",{
+// 	ProductName: 'Pillows',
+// 	DepartmentName: 'Home',
+// 	Price: 50.00,
+// 	StockQuantity: 14
+// }, function(err, res){});
 
 
 //question to ask for what to do with the data base
@@ -73,8 +73,8 @@ var addProduct=[{
 }];
 
 inquirer.prompt(questions).then(function(answers){
-	console.log(answers.theme);
-	console.log(answers.newProduct);
+	// console.log(answers.theme);
+	// console.log(answers.newProduct);
 	// console.log(answers.amount);
 	
 	if(answers.theme == 'View Products for Sale'){
