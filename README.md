@@ -1,3 +1,3 @@
 # Bamazon
 
-(/images/BamazonCustomer.png)
+![ALT text](/images/BamazonCustomer.png)
