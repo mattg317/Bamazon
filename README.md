@@ -11,7 +11,7 @@ View Low Inventory
 ![Inventory](/images/lowInventory.png)
 
 Add to Inventory
-![Add](/updateInventory.png)
+![Add](/images/updateInventory.png)
 
 Add New Product
 ![New Products](/images/AddProduct.png)
